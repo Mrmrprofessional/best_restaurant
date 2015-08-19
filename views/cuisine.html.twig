@@ -10,7 +10,7 @@
         <p>Here are the restaurants:</p>
         <ul>
             {% for restaurant in restaurants %}
-                <li><h3>{{ restaurant.getname }}</h3> Address: {{ restaurant.getaddress }}</li>
+                <li><a href="/restaurant/{{ restaurant.getId }}/edit"><h3>{{ restaurant.getname }}</h3></a> Address: {{ restaurant.getaddress }}</li>
             {% endfor %}
         </ul>
     {% endif %}

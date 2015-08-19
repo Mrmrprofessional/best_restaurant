@@ -97,12 +97,24 @@
         }
 
         function update($new_type) {
-            $GLOBALS['DB']->exec("UPDATE cuisines SET type = '{new_type}' WHERE id = {this->getId()};");
+            $GLOBALS['DB']->exec("UPDATE cuisines SET type = '{$new_type}' WHERE id = {$this->getId()};");
             $this->setType($new_type);
         }
 
         function delete() {
             $GLOBALS['DB']->exec("DELETE FROM cuisines WHERE id = {$this->getId()}; DELETE FROM restaurants WHERE cuisine_id = {$this->getId()};");
+        }
+
+        static function findCuisine($search_type)
+        {
+            $found_cuisine = null;
+            $cuisines = Cuisine::getAll();
+            foreach($cuisines as $cuisine) {
+                if($cuisine->gettype() == $search_type) {
+                    $found_cuisine = $cuisine;
+                }
+            }
+            return $found_cuisine;
         }
 
 

@@ -33,5 +33,39 @@
             //Assert
             $this->assertEquals("Mike's new and better place", $test_restaurant->getName());
         }
+
+        function test_Delete() {
+            $name = "Rest 1";
+            $id = null;
+            $address = "123";
+            $cuisine_id = 1;
+            $test_restaurant = new Restaurant($name, $address, $id, $cuisine_id);
+            $test_restaurant->save();
+
+            $name2 = "Rest 1";
+            $id2 = null;
+            $address2 = "123";
+            $cuisine_id2 = 1;
+            $test_restaurant2 = new Restaurant($name2, $address2, $id2, $cuisine_id2);
+            $test_restaurant2->save();
+
+            $test_restaurant->delete();
+
+            $this->assertEquals([$test_restaurant2], Restaurant::getAll());
+        }
+
+        function test_findByName() {
+            $name = "Rest 1";
+            $address = "Add 1";
+            $id = null;
+            $cuisine_id = 1;
+            $name2 = "Rest 2";
+            $address2 = "Add 2";
+            $test_restaurant = new Restaurant($name, $address, $id, $cuisine_id);
+            $test_restaurant->save();
+            $test_restaurant2 = new Restaurant($name2, $address2, $id, $cuisine_id);
+            $test_restaurant2->save();
+        }
+
     }
 ?>

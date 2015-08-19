@@ -12,14 +12,12 @@
     $password = 'root';
     $DB = new PDO($server, $username, $password);
 
-
+    use Symfony\Component\HttpFoundation\Request;
+    Request::enableHttpMethodParameterOverride();
 
     $app->register(new Silex\Provider\TwigServiceProvider(), array(
         'twig.path' => __DIR__.'/../views'
     ));
-
-    use Symfony\Component\HttpFoundation\Request;
-    Request::enableHttpMethodParameterOverride();
 
     $app->get("/", function() use ($app) {
         return $app['twig']->render('index.html.twig', array('cuisines' => Cuisine::getAll()));
@@ -41,6 +39,16 @@
     $app->get("/cuisines/{id}/edit", function($id) use ($app){
         $cuisine = Cuisine::find($id);
         return $app['twig']->render('cuisine_edit.html.twig', array('cuisine' => $cuisine));
+    });
+
+    $app->get("/restaurant/{id}/edit", function($id) use ($app){
+        $restaurant = Restaurant::find($id);
+        return $app['twig']->render('restaurant_edit.html.twig', array('restaurant' => $restaurant));
+    });
+
+    $app->get('/search_cuisines', function() use ($app) {
+        $search = Cuisine::findCuisine($_GET['search']);
+        return $app['twig']->render('cuisine.html.twig', array('cuisine' => $search, 'restaurants' => $search->getrestaurants()));
     });
 
     //------------------------------------------------------
@@ -88,22 +96,32 @@
         return $app['twig']->render('cuisine.html.twig', array('cuisine' => $cuisine, 'restaurants' => $cuisine->getRestaurants()));
     });
 
-    // $app->patch("/cuisines/{id}", function($id) use ($app) {
-    //     $type = $_POST['type'];
-    //     $cuisine = Cuisine::find($id);
-    //     $cuisine->update($type);
-    //     return $app['twig']->render('cuisine.html.twig', array('cuisine' => $cuisine, 'restaurants' => $cuisine->getRestaurants()));
-    // });
+    $app->patch("/restaurant/{id}", function($id) use ($app) {
+        $name = $_POST['name'];
+        $restaurant = Restaurant::find($id);
+        $restaurant->update($name);
+        $cuisine = Cuisine::find($restaurant->getCuisineId());
+        // $cuisine_id_search = Restaurant::findCuisineId($id);
+        // $cuisine = Cuisine::find($cuisine_id_search);
+        return $app['twig']->render('cuisine.html.twig', array('cuisine' => $cuisine, 'restaurants' => $cuisine->getRestaurants()));
+    });
 
 
 
     //-------------------------------------------------------
 
     $app->delete("/cuisines/{id}", function($id) use ($app) {
-    $cuisine = Cuisine::find($id);
-    $cuisine->delete();
-    return $app['twig']->render('index.html.twig', array('cuisines' => Cuisine::getAll()));
-});
+        $cuisine = Cuisine::find($id);
+        $cuisine->delete();
+        return $app['twig']->render('index.html.twig', array('cuisines' => Cuisine::getAll()));
+    });
+
+    $app->delete("/restaurant/{id}", function($id) use ($app) {
+        $restaurant = Restaurant::find($id);
+        $cuisine = Cuisine::find($restaurant->getCuisineId());
+        $restaurant->delete();
+        return $app['twig']->render('cuisine.html.twig', array('cuisine' => $cuisine, 'restaurants' => $cuisine->getRestaurants()));
+    });
 
 return $app;
 

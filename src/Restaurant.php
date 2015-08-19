@@ -84,10 +84,28 @@
             return $found_restaurant;
         }
 
+        // static function findCuisineId($search_id)
+        // {
+        //     $found_cuisine = null;
+        //     $restaurants = Restaurant::getAll();
+        //     foreach($restaurants as $restaurant) {
+        //         $restaurant_id = $restaurant->getId();
+        //         $cuisine_search = $restaurant->getCuisineId();
+        //         if ($restaurant_id == $search_id) {
+        //           $found_cuisine = $cuisine_search;
+        //         }
+        //     }
+        //     return $found_cuisine;
+        // }
+
         function update($new_name)
         {
             $GLOBALS['DB']->exec("UPDATE restaurants SET name = '{$new_name}' WHERE id = {$this->getId()};");
             $this->setName($new_name);
+        }
+
+        function delete() {
+            $GLOBALS['DB']->exec("DELETE FROM restaurants WHERE id = {$this->getId()};");
         }
     }
 ?>

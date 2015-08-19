@@ -47,6 +47,7 @@
 
             $this->assertEquals([$test_cuisine2], Cuisine::getAll());
         }
+
         function testDeleteCuisineRestaurants()
         {
             //Arrange
@@ -68,6 +69,8 @@
             //Assert
             $this->assertEquals([], Restaurant::getAll());
         }
+
+
     }
 
  ?>

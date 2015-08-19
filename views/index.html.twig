@@ -15,6 +15,13 @@
         <button type="submit">Add cuisine</button>
     </form>
 
+    <form action="/search_cuisines" method="get">
+        <label for="search">Search Cuisines:</label>
+        <input id="search" name="search" type="text">
+
+        <button type="submit">Search</button>
+    </form>
+
     {% if cuisines is not empty %}
         <p>Here are all your cuisines:</p>
         <ul>
