@@ -73,11 +73,11 @@
     //     return $app['twig']->render('cuisine.html.twig', array('cuisine' => $cuisine));
     // });
 
-    $app->post("/results", function() use ($app) {
-        // $cuisine = new cuisine($_POST['find']);
-        // $cuisine->save();
-        return $app['twig']->render('results.html.twig', array('cuisines' => Cuisine::getMatches($_POST['find'])));
-    });
+    // $app->post("/results", function() use ($app) {
+    //     // $cuisine = new cuisine($_POST['find']);
+    //     // $cuisine->save();
+    //     return $app['twig']->render('results.html.twig', array('cuisines' => Cuisine::getMatches($_POST['find'])));
+    // });
 
     //------------------------------------------------------
 
@@ -87,6 +87,13 @@
         $cuisine->update($type);
         return $app['twig']->render('cuisine.html.twig', array('cuisine' => $cuisine, 'restaurants' => $cuisine->getRestaurants()));
     });
+
+    // $app->patch("/cuisines/{id}", function($id) use ($app) {
+    //     $type = $_POST['type'];
+    //     $cuisine = Cuisine::find($id);
+    //     $cuisine->update($type);
+    //     return $app['twig']->render('cuisine.html.twig', array('cuisine' => $cuisine, 'restaurants' => $cuisine->getRestaurants()));
+    // });
 
 
 

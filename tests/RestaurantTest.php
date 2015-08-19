@@ -13,14 +13,16 @@
     $password = 'root';
     $DB = new PDO($server, $username, $password);
 
-    class CuisineTest extends PHPUnit_Framework_TestCase {
+    class RestaurantTest extends PHPUnit_Framework_TestCase {
 
         function testUpdate()
         {
             //Arrange
             $name = "Steve's";
             $id = null;
-            $test_restaurant = new Restaurant($name, $id);
+            $address = "123";
+            $cuisine_id = 1;
+            $test_restaurant = new Restaurant($name, $address, $id, $cuisine_id);
             $test_restaurant->save();
 
             $new_name = "Mike's new and better place";
