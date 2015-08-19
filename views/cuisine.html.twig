@@ -1,0 +1,51 @@
+<html>
+<head>
+    <title>Food</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+</head>
+<body class="container">
+    <h1>{{ cuisine.gettype }}</h1>
+
+    {% if restaurants is not empty %}
+        <p>Here are the restaurants:</p>
+        <ul>
+            {% for restaurant in restaurants %}
+                <li><h3>{{ restaurant.getname }}</h3> Address: {{ restaurant.getaddress }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <h4>Add a Restaurant</h4>
+
+    <div class='row'>
+        <form action='/restaurants' method='post' class="form-group col-xs-4">
+
+            <input id="cuisine_id" name="cuisine_id" type="hidden" value="{{ cuisine.getId() }}">
+            <label for='name'>Restaurant Name</label>
+            <input id='name' name='name' type='text' class="form-control">
+            <label for='address'>Address</label>
+            <input id='address' name='address' type='text' class="form-control">
+            <button type='submit' class="btn-primary" style="margin-top:1em;">Add Address</button>
+        </form>
+    </div>
+
+
+    <p><a href="/cuisines/{{ cuisine.getId }}/edit">Edit this cuisine</a></p>
+
+    <p><a href='/'>Home</a></p>
+</body>
+</html>
+<!-- <form action='/delete_restaurants' method='post'>
+    <input id="cuisine_id" name="cuisine_id" type="hidden" value="{{ cuisine.getId() }}">
+
+    <button type='submit'>Delete restaurants</button>
+</form> -->
+
+        <!-- <form action='/results' method='post'>
+            <label for='find'>Find cuisine</label>
+            <input id='find' name='find' type='text'>
+
+            <button type='submit'>Find a cuisine</button>
+        </form>
+
+     -->

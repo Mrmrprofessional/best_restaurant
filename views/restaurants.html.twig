@@ -1,0 +1,31 @@
+<html>
+    <head>
+        <title>Restaurants</title>
+
+    </head>
+    <body class="container">
+        <h1>Restaurants</h1>
+        {% if restaurants is not empty %}
+             <ul>
+                {% for restaurant in restaurants %}
+                    <li>{{ restaurant.getName }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <form action='/restaurants' method='post'>
+            <label for='name'>Restaurant name</label>
+            <input id='name' name='name' type='text'>
+
+            <button type='submit'>Add restaurant</button>
+        </form>
+        <form action='/delete_restaurants' method='post'>
+            <button type='submit'>Clear</button>
+        </form>
+
+        <p><a href="/">Home</a></p>
+
+
+
+    </body>
+</html>
