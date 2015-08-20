@@ -54,18 +54,5 @@
             $this->assertEquals([$test_restaurant2], Restaurant::getAll());
         }
 
-        function test_findByName() {
-            $name = "Rest 1";
-            $address = "Add 1";
-            $id = null;
-            $cuisine_id = 1;
-            $name2 = "Rest 2";
-            $address2 = "Add 2";
-            $test_restaurant = new Restaurant($name, $address, $id, $cuisine_id);
-            $test_restaurant->save();
-            $test_restaurant2 = new Restaurant($name2, $address2, $id, $cuisine_id);
-            $test_restaurant2->save();
-        }
-
     }
 ?>
