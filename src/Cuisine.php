@@ -105,16 +105,23 @@
             $GLOBALS['DB']->exec("DELETE FROM cuisines WHERE id = {$this->getId()}; DELETE FROM restaurants WHERE cuisine_id = {$this->getId()};");
         }
 
-        static function findCuisine($search_type)
+        static function findEverything($search_type)
         {
-            $found_cuisine = null;
+            $found_search = null;
             $cuisines = Cuisine::getAll();
-            foreach($cuisines as $cuisine) {
-                if($cuisine->gettype() == $search_type) {
-                    $found_cuisine = $cuisine;
+            $restaurants = Restaurant::getAll();
+            $searchables = array_merge($restaurants, $cuisines);
+            foreach($searchables as $searchable) {
+                if(get_class($searchable) == "Cuisine"){
+                    if($searchable->gettype() == $search_type) {
+                        $found_search = $searchable;
+                    }
+                }
+                elseif($searchable->getname() == $search_type) {
+                    $found_search = $searchable;
                 }
             }
-            return $found_cuisine;
+            return $found_search;
         }
 
 

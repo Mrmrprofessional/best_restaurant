@@ -48,7 +48,7 @@
             $this->assertEquals([$test_cuisine2], Cuisine::getAll());
         }
 
-        function testDeleteCuisineRestaurants()
+        function testFindEverything()
         {
             //Arrange
             $type = "Pizza";
@@ -62,14 +62,12 @@
             $test_restaurant = new Restaurant($name, $address, $id, $cuisine_id);
             $test_restaurant->save();
 
-
             //Act
-            $test_cuisine->delete();
+            $result = Cuisine::findEverything($test_restaurant->getName());
 
             //Assert
-            $this->assertEquals([], Restaurant::getAll());
+            $this->assertEquals([$test_restaurant], $result);
         }
-
 
     }
 

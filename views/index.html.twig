@@ -1,39 +1,47 @@
 <html>
 <head>
-    <title>Food</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    <title>Epicuisine</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.5/yeti/bootstrap.min.css">
+    <link rel="stylesheet" href="/styles.css">
 </head>
-<body class="container">
-    <h1>Welcome to Food</h1>
+<body class="container text-center">
+    <div id="wrapper">
+        <div id="header">
+            <a href="/"><h1>Epicuisine</h1></a>
+            <div class="row">
+                <form action="/search" method="get">
+                    <input id="search" name="search" type="text" placeholder="Restaurant or cuisine">
+                    <button class="btn-info" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+        <div id="body">
+            <hr>
+            <div>
+                <h2>Cuisines</h2>
+            </div>
+            {% if cuisines is not empty %}
+                <ul class="list-inline list-unstyled">
+                    {% for cuisine in cuisines %}
+                        <li><a href="/cuisines/{{ cuisine.getId }}">{{ cuisine.getType }}</a>&nbsp;&nbsp;&nbsp;||</li>
+                    {% endfor %}
+                </ul>
 
-    <p>Enter a new cuisine:</p>
+            {% else %}
+              <p>No cuisines have been added!</p>
+            {% endif %}
+            </div>
+        </div>
+        <div id="footer">
+            <hr>
+            <div class="row">
+                <form action="/cuisines" method="post">
+                    <input  id="type" name="type" type="text" placeholder="Add a Cuisine">
 
-    <form action="/cuisines" method="post">
-        <label for="type">Cuisine type:</label>
-        <input id="type" name="type" type="text">
-
-        <button type="submit">Add cuisine</button>
-    </form>
-
-    <form action="/search_cuisines" method="get">
-        <label for="search">Search Cuisines:</label>
-        <input id="search" name="search" type="text">
-
-        <button type="submit">Search</button>
-    </form>
-
-    {% if cuisines is not empty %}
-        <p>Here are all your cuisines:</p>
-        <ul>
-            {% for cuisine in cuisines %}
-                <li><a href="/cuisines/{{ cuisine.getId }}">{{ cuisine.getType }}</a></li>
-            {% endfor %}
-        </ul>
-
-    {% else %}
-      <p>There are no cuisines yet!</p>
-    {% endif %}
-
+                    <button type="submit" class="btn-danger">Add cuisine</button>
+                </form>
+        </div>
+    </div>
 </body>
 </html>
 <!-- <form action='/delete_cuisines' method='post'>

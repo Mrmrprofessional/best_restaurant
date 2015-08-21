@@ -1,51 +1,57 @@
 <html>
 <head>
-    <title>Food</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    <title>Epicuisine</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.5/yeti/bootstrap.min.css">
+    <link rel="stylesheet" href="/styles.css">
 </head>
-<body class="container">
-    <h1>{{ cuisine.gettype }}</h1>
-
-    {% if restaurants is not empty %}
-        <p>Here are the restaurants:</p>
-        <ul>
-            {% for restaurant in restaurants %}
-                <li><a href="/restaurant/{{ restaurant.getId }}/edit"><h3>{{ restaurant.getname }}</h3></a> Address: {{ restaurant.getaddress }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
-
-    <h4>Add a Restaurant</h4>
-
-    <div class='row'>
-        <form action='/restaurants' method='post' class="form-group col-xs-4">
-
-            <input id="cuisine_id" name="cuisine_id" type="hidden" value="{{ cuisine.getId() }}">
-            <label for='name'>Restaurant Name</label>
-            <input id='name' name='name' type='text' class="form-control">
-            <label for='address'>Address</label>
-            <input id='address' name='address' type='text' class="form-control">
-            <button type='submit' class="btn-primary" style="margin-top:1em;">Add Address</button>
-        </form>
+<body class="text-center">
+    <div id="wrapper">
+        <div id="header">
+            <a href="/"><h1>Epicuisine</h1></a>
+            <div class="row">
+                <form action="/search" method="get">
+                    <input id="search" name="search" type="text" placeholder="Restaurant or cuisine">
+                    <button class="btn-info" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+        <div id="body">
+            <hr>
+            <div>
+                <h2>{{ cuisine.gettype }} Restaurants</h2>
+            </div>
+            {% if restaurants is not empty %}
+                <ul class="list-inline list-unstyled">
+                    {% for restaurant in restaurants %}
+                        <li><a href="/restaurant/{{ restaurant.getId }}/edit">{{ restaurant.getname }}</a>&nbsp;&nbsp;&nbsp;||</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>
+                    No restaurants have been added!
+                </p>
+            {% endif %}
+        </div>
+        <div id="footer">
+            <div class="row">
+                <form action='/restaurants' method='post'>
+                    <input id="cuisine_id" name="cuisine_id" type="hidden" value="{{ cuisine.getId() }}">
+                    <input id='name' name='name' type='text' placeholder="name">
+                    <input id='address' name='address' type='text' placeholder="address">
+                    <button type='submit' class="btn-success">Add Restaurant</button>
+                </form>
+                <hr>
+                <form action="/cuisines/{{ cuisine.getId }}" method="post">
+                  <input name="_method" type="hidden" value="patch">
+                  <input id="type" name="type" type="text" placeholder="name">
+                  <button class="btn-warning" type="submit">Update Cuisine</button>
+                </form>
+                <form action="/cuisines/{{ cuisine.getId }}" method="post">
+                  <input name="_method" type="hidden" value="delete">
+                  <button class="btn-danger" type="submit">Delete this cuisine</button>
+                </form>
+            </div>
+        </div>
     </div>
-
-
-    <p><a href="/cuisines/{{ cuisine.getId }}/edit">Edit this cuisine</a></p>
-
-    <p><a href='/'>Home</a></p>
 </body>
 </html>
-<!-- <form action='/delete_restaurants' method='post'>
-    <input id="cuisine_id" name="cuisine_id" type="hidden" value="{{ cuisine.getId() }}">
-
-    <button type='submit'>Delete restaurants</button>
-</form> -->
-
-        <!-- <form action='/results' method='post'>
-            <label for='find'>Find cuisine</label>
-            <input id='find' name='find' type='text'>
-
-            <button type='submit'>Find a cuisine</button>
-        </form>
-
-     -->

@@ -3,7 +3,8 @@
 
     require_once __DIR__."/../vendor/autoload.php";
     require_once __DIR__."/../src/Restaurant.php";
-    require_once __DIR__."/../src/cuisine.php";
+    require_once __DIR__."/../src/Cuisine.php";
+    require_once __DIR__."/../src/Review.php";
 
     $app = new Silex\Application();
 
@@ -43,12 +44,25 @@
 
     $app->get("/restaurant/{id}/edit", function($id) use ($app){
         $restaurant = Restaurant::find($id);
-        return $app['twig']->render('restaurant_edit.html.twig', array('restaurant' => $restaurant));
+        return $app['twig']->render('restaurant_edit.html.twig', array('restaurant' => $restaurant, 'reviews' => $restaurant->getReviews()));
     });
 
-    $app->get('/search_cuisines', function() use ($app) {
-        $search = Cuisine::findCuisine($_GET['search']);
-        return $app['twig']->render('cuisine.html.twig', array('cuisine' => $search, 'restaurants' => $search->getrestaurants()));
+    $app->get('/search', function() use ($app) {
+        $search = Cuisine::findEverything($_GET['search']);
+        if($search != null){
+            if(get_class($search)=="Cuisine")
+            {
+                return $app['twig']->render('cuisine.html.twig', array('cuisine' => $search, 'restaurants' => $search->getRestaurants()));
+            }
+            elseif(get_class($search)=="Restaurant")
+            {
+                return $app['twig']->render('restaurant_edit.html.twig', array('restaurant' => $search, 'reviews' => $search->getReviews()));
+            }
+        }
+        else
+        {
+            return $app['twig']->render('no_results.html.twig');
+        }
     });
 
     //------------------------------------------------------
@@ -67,6 +81,18 @@
         $cuisine = new Cuisine($_POST['type']);
         $cuisine->save();
         return $app['twig']->render('index.html.twig', array('cuisines' => Cuisine::getAll()));
+    });
+
+    $app->post('/review', function() use ($app) {
+        $user = $_POST['user'];
+        $rating = $_POST['rating'];
+        $date = $_POST['date'];
+        $restaurant_id = $_POST['restaurant_id'];
+        $review = new Review($user, $rating, $content = null, $date, $id = null, $restaurant_id);
+        $restaurant = Restaurant::find($restaurant_id);
+        $review->save();
+        return $app['twig']->render('restaurant_edit.html.twig', array('reviews'=> $restaurant->getReviews(), 'restaurant'=>$restaurant));
+
     });
 
     // $app->post("/delete_cuisines", function() use ($app) {
