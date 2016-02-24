@@ -66,10 +66,6 @@
           $GLOBALS['DB']->exec("DELETE FROM restaurants;");
         }
 
-        // static function deleterestaurants($cuisine_id)
-        // {
-        //   $GLOBALS['DB']->exec("DELETE FROM restaurants WHERE cuisine_id = {$cuisine_id};");
-        // }
 
         static function find($search_id)
         {
@@ -83,20 +79,6 @@
             }
             return $found_restaurant;
         }
-
-        // static function findCuisineId($search_id)
-        // {
-        //     $found_cuisine = null;
-        //     $restaurants = Restaurant::getAll();
-        //     foreach($restaurants as $restaurant) {
-        //         $restaurant_id = $restaurant->getId();
-        //         $cuisine_search = $restaurant->getCuisineId();
-        //         if ($restaurant_id == $search_id) {
-        //           $found_cuisine = $cuisine_search;
-        //         }
-        //     }
-        //     return $found_cuisine;
-        // }
 
         function update($new_name)
         {

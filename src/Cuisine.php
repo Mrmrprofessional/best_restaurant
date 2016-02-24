@@ -29,7 +29,6 @@
         {
             $GLOBALS['DB']->exec("INSERT INTO cuisines (type) VALUES ('{$this->gettype()}')");
             $this->id = $GLOBALS['DB']->lastInsertId();
-            // $this->setId($result_id);
         }
 
         static function getAll()
@@ -50,11 +49,6 @@
           $GLOBALS['DB']->exec("DELETE FROM cuisines;");
         }
 
-        // static function deleteEverything()
-        // {
-        //   $GLOBALS['DB']->exec("DELETE FROM cuisines; DELETE FROM cuisines;");
-        // }
-
         static function find($search_id)
         {
             $found_cuisine = null;
@@ -67,19 +61,6 @@
             }
             return $found_cuisine;
         }
-
-        // static function getMatches($cuisine_input)
-        // {
-        //     $returned_cuisines = $GLOBALS['DB']->query("SELECT * FROM cuisines WHERE type LIKE '%$cuisine_input%';");
-        //     $cuisines = array();
-        //     foreach($returned_cuisines as $cuisine) {
-        //         $type = $cuisine['type'];
-        //         $id = $cuisine['id'];
-        //         $new_cuisine = new cuisine($type, $id);
-        //         array_push($cuisines, $new_cuisine);
-        //     }
-        //     return $cuisines;
-        // }
 
         function getRestaurants()
         {

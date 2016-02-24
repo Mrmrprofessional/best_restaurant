@@ -98,8 +98,6 @@
         $restaurant = Restaurant::find($id);
         $restaurant->update($name);
         $cuisine = Cuisine::find($restaurant->getCuisineId());
-        // $cuisine_id_search = Restaurant::findCuisineId($id);
-        // $cuisine = Cuisine::find($cuisine_id_search);
         return $app['twig']->render('cuisine.html.twig', array('cuisine' => $cuisine, 'restaurants' => $cuisine->getRestaurants()));
     });
 
