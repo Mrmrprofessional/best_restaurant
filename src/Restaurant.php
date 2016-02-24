@@ -112,16 +112,18 @@
         {
             $reviews = array();
             $returned_reviews = $GLOBALS['DB']->query("SELECT * FROM reviews WHERE restaurant_id = {$this->getId()} ORDER BY date;");
-            foreach($returned_reviews as $review) {
-                $user = $review['user'];
-                $date = $review['date'];
-                $rating = $review['rating'];
-                $id = $review['id'];
-                $content = $review['content'];
-                $restaurant_id = $review['restaurant_id'];
-                $new_review = new Review($user, $rating, $content, $date, $id, $restaurant_id);
-                array_push($reviews, $new_review);
-            }
+            if($returned_reviews){
+              foreach($returned_reviews as $review) {
+                  $user = $review['user'];
+                  $date = $review['date'];
+                  $rating = $review['rating'];
+                  $id = $review['id'];
+                  $content = $review['content'];
+                  $restaurant_id = $review['restaurant_id'];
+                  $new_review = new Review($user, $rating, $content, $date, $id, $restaurant_id);
+                  array_push($reviews, $new_review);
+              }
+          }
             return $reviews;
         }
     }
